@@ -12,4 +12,5 @@ project(
 
 # Find packages go here.
 
+add_subdirectory(common)
 add_subdirectory(2023)

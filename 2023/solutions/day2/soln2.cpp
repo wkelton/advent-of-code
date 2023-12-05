@@ -4,7 +4,11 @@
 #include <string>
 #include <sstream>
 #include <vector>
+
 #include <cassert>
+
+#include <common/strings.h>
+
 
 struct dice_t {
     int red = 0;
@@ -18,27 +22,17 @@ struct game_t {
 };
 
 game_t parse_line(const std::string& line) {
-    auto split = [](const std::string& s, char delim) {
-        std::vector<std::string> elems;
-        std::stringstream ss(s);
-        std::string elem;
-        while(std::getline(ss, elem, delim)) {
-            elems.push_back(elem);
-        }
-        return elems;
-    };
-
-    auto game_split = split(line, ':');
+    auto game_split = advent::strings::split(line, ':');
     assert(game_split.size() == 2ul);
     assert(game_split.front().size() > 5);
 
     game_t game;
     game.id = std::stoi(game_split.front().substr(5));
 
-    auto rounds_split = split(game_split[1], ';');
+    auto rounds_split = advent::strings::split(game_split[1], ';');
     assert(!rounds_split.empty());
     for (const auto& round : rounds_split) {
-        auto dice_split = split(round, ',');
+        auto dice_split = advent::strings::split(round, ',');
         assert(!dice_split.empty());
         game.dice_rounds.emplace_back();
 
@@ -46,7 +40,7 @@ game_t parse_line(const std::string& line) {
             d.erase(d.begin(), std::find_if(d.begin(), d.end(), [](unsigned char ch) {
                 return !std::isspace(ch);
             }));
-            auto num_split = split(d, ' ');
+            auto num_split = advent::strings::split(d, ' ');
             assert(num_split.size() == 2ul);
 
             if (num_split[1].find("red") != std::string::npos) {
