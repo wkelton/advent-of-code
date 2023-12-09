@@ -7,10 +7,7 @@ project(
   VERSION 1.0
   LANGUAGES CXX)
 
-# If you set any CMAKE_ variables, that can go here.
-# (But usually don't do this, except maybe for C++ standard)
-
-# Find packages go here.
+set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(common)
 add_subdirectory(2023)
